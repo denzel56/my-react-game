@@ -1,11 +1,17 @@
+import { useState } from 'react';
 import s from './style.module.css';
 import cardBackS from './assets/card-back-side.jpg';
 
 const PokemonCards = ({ name, img, id, type, values }) => {
+  const [isActive, setActive] = useState(false);
+
+  const handleClick = () => {
+    setActive(true);
+  }
 
   return (
-    <div className={s.root}>
-          <div className={s.pokemonCard}>
+    <div className={s.root} onClick = {handleClick}>
+          <div className={`${s.pokemonCard} ${isActive ? s.active : ''}`}>
             <div className={s.cardFront}>
               <div className={s.wrapFront}>
                 <div className={`${s.wrap} ${s.front}`}>
