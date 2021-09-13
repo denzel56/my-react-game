@@ -1,12 +1,14 @@
 import './App.css';
-import s from './style.module.css';
+
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Layout from './components/Layout';
 import PokemonCards from './components/PokemonCards';
 import bg1 from './assets/bg1.jpg';
 import bg3 from './assets/bg3.jpg';
-import POKEMONS from './data/pokemons.json'
+import POKEMONS from './data/pokemons.json';
+
+import s from './style.module.css';
 
 function App() {
   const title = 'This is title';
