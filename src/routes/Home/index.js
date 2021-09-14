@@ -11,7 +11,6 @@ import s from './style.module.css';
 
 function HomePage({ onChangePage }) {
   const handleClickButton = (page) => {
-    console.log('####: <HomePage />');
     onChangePage && onChangePage(page);
   }
   const title = 'This is title';

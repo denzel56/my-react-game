@@ -6,7 +6,6 @@ const App = () => {
   const [page, setState] = useState('app');
 
   const handleChangePage = (page) => {
-    console.log('####: <Main />');
     setState(page);
   }
 

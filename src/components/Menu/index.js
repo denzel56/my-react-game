@@ -2,7 +2,7 @@ import cn from 'classnames'
 import s from './style.module.css';
 
 const Menu = ({ state }) => {
-  console.log('#### menu', state)
+
   return (
     <div className={cn(s.menuContainer, {[s.active]: state}, {[s.deactive]: !state})}>
     <div className={cn(s.overlay)} />

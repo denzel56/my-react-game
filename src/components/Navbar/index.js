@@ -3,7 +3,7 @@ import s from './style.module.css';
 
 const Navbar = ({ onClickHamburger, state }) => {
   const handleClick = () => {
-    console.log('#### click', state);
+
     onClickHamburger && onClickHamburger();
   }
 
