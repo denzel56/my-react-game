@@ -3,43 +3,23 @@ import Navbar from '../Navbar';
 import Menu from '../Menu';
 
 const MenuHeader = () => {
-  const [hamburger, setState] = useState(undefined);
+  const [hamburger, setState] = useState(null);
 
   const handleClickHamburger = (hamburger) => {
     setState(prevState => !prevState);
   }
 
-  switch (hamburger) {
-    case false:
-      return (
-        <>
-          <Navbar
-            onClickHamburger={handleClickHamburger}
-            state = {hamburger}
-          />
-          <Menu
-            state = {hamburger}
-          />
-        </>
-      )
-    case true:
-      return (
-        <>
-          <Navbar
-            onClickHamburger={handleClickHamburger}
-            state = {hamburger}
-          />
-          <Menu
-            state = {hamburger}
-          />
-        </>
-      )
-    default:
-      return <Navbar
-      onClickHamburger={handleClickHamburger}
-      state = {hamburger}
+  return (
+    <>
+      <Navbar
+        onClickHamburger={handleClickHamburger}
+        state = {hamburger}
       />
-  }
+      <Menu
+        state = {hamburger}
+      />
+    </>
+)
 }
 
 export default MenuHeader;
