@@ -1,14 +1,22 @@
+import MenuHeader from "../../components/MenuHeader";
+
 const GamePage = ({ onChangePage }) => {
   const handleClickButton = () => {
     onChangePage && onChangePage('app');
   }
   return (
-    <div>
-      <p>This is game page!!!</p>
-      <button onClick={handleClickButton}>
+    <>
+      <MenuHeader
+        bgActive = {true}
+      />
+      <div>
+        <p>This is game page!!!</p>
+        <button style = {{marginTop: '75px'}}
+          onClick={handleClickButton}>
           Start Game
-      </button>
-    </div>
+        </button>
+      </div>
+    </>
   );
 };
 

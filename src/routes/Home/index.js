@@ -8,23 +8,23 @@ import bg3 from '../../assets/bg3.jpg';
 import POKEMONS from '../../data/pokemons.json';
 
 import s from './style.module.css';
+import { useState } from 'react';
 
 function HomePage({ onChangePage }) {
   const handleClickButton = (page) => {
     onChangePage && onChangePage(page);
   }
-  const title = 'This is title';
-  const descr = 'This is Description!'
+
   return (
     <>
       <MenuHeader />
       <Header
-        title = {title}
-        descr = {descr}
+        title = "Pokemon Card Game"
+        descr = "Simple game on React"
         onClickButton = {handleClickButton}
       />
       <Layout
-        title = {title}
+        title = "Game rules"
         urlBg = {bg1}
       >
         <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a 3x3 grid.
@@ -34,7 +34,7 @@ function HomePage({ onChangePage }) {
         </p>
       </Layout>
       <Layout
-        title = {title}
+        title = "Cards"
         colorBg = '#30d5c8'
       >
         <div className={s.flex}>
@@ -51,7 +51,7 @@ function HomePage({ onChangePage }) {
         </div>
       </Layout>
       <Layout
-        title = {title}
+        title = "Info"
 
         urlBg = {bg3}
       >
