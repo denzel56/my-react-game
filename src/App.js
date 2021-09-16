@@ -6,15 +6,16 @@ import MenuHeader from "./components/MenuHeader";
 import Footer from "./components/Footer";
 
 import s from "./style.module.css";
+import AboutPage from "./routes/About";
+import NotFoundPage from "./routes/NotFound";
+import ContactPage from "./routes/ContactPage";
 
 const App = () => {
   const match = useRouteMatch('/');
 
   return (
     <Switch>
-      <Route path="/404" render={() => {
-        <h1> Error 404. Page not found!</h1>
-      }} />
+      <Route path="/404" component={NotFoundPage} />
       <Route>
         <>
           <MenuHeader bgActive={!match.isExact} />
@@ -25,9 +26,8 @@ const App = () => {
               <Route path="/" exact component={HomePage} />
               <Route path="/home" component={HomePage} />
               <Route path="/game" component={GamePage} />
-              <Route path="/about" render={() => {
-                <h1> This is page About </h1>
-              }} />
+              <Route path="/about" component={AboutPage} />
+              <Route path="/contact" component={ContactPage} />
               <Route render={() => {
                 <Redirect to="/404" />
               }} />
