@@ -4,7 +4,7 @@ import Menu from '../Menu';
 
 const MenuHeader = ({bgActive}) => {
   const [isOpen, setOpen] = useState(null);
-  console.log('### bg', bgActive);
+
   const handleClickHamburger = () => {
     setOpen(prevState => !prevState);
   }
@@ -18,6 +18,7 @@ const MenuHeader = ({bgActive}) => {
       />
       <Menu
         isOpen = {isOpen}
+        onClickMenu = {handleClickHamburger}
       />
     </>
 )
