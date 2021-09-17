@@ -11,16 +11,15 @@ const GamePage = (isActiveId) => {
   const handleClick = (isActiveId) => {
     setPokemonsAtive(prevState => {
       prevState.map((item) => {
-        if (item.id === isActiveId && item.active !== true) {
-          item.active = true
-        } else if (item.id === isActiveId && item.active === true) {
-          item.active = false
+        if (item.id === isActiveId) {
+          item.active = !item.active
         }
 
       })
       return [...prevState];
     })
   }
+
   return (
     <>
       <div className={s.flex}>
