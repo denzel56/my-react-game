@@ -2,21 +2,23 @@ import { useState } from 'react';
 import Navbar from '../Navbar';
 import Menu from '../Menu';
 
-const MenuHeader = () => {
-  const [hamburger, setState] = useState(null);
+const MenuHeader = ({bgActive}) => {
+  const [isOpen, setOpen] = useState(null);
 
-  const handleClickHamburger = (hamburger) => {
-    setState(prevState => !prevState);
+  const handleClickHamburger = () => {
+    setOpen(prevState => !prevState);
   }
 
   return (
     <>
       <Navbar
-        onClickHamburger={handleClickHamburger}
-        state = {hamburger}
+        onClickHamburger = {handleClickHamburger}
+        isOpen = {isOpen}
+        bgActive = {bgActive}
       />
       <Menu
-        state = {hamburger}
+        isOpen = {isOpen}
+        onClickMenu = {handleClickHamburger}
       />
     </>
 )
