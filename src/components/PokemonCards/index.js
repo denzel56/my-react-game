@@ -4,10 +4,10 @@ import cardBackS from './assets/card-back-side.jpg';
 import s from './style.module.css';
 
 
-const PokemonCards = ({ name, img, id, type, values, onClickCard, isActive}) => {
+const PokemonCards = ({ name, img, id, type, values, onClickCard, isActive, objKey }) => {
 
   const handleClick = () => {
-    onClickCard && onClickCard(id);
+    onClickCard && onClickCard(objKey);
   }
 
   return (

@@ -1,14 +1,18 @@
 import { useRouteMatch, Route, Switch, Redirect } from "react-router";
 import cn from 'classnames';
+// import { firebaseApp } from "./service/firebase";
+// import { database } from "./service/firebase";
+// import { get, child, ref} from "firebase/database"
+
 import HomePage from "./routes/HomePage";
 import GamePage from "./routes/GamePage";
 import MenuHeader from "./components/MenuHeader";
 import Footer from "./components/Footer";
-
-import s from "./style.module.css";
 import AboutPage from "./routes/About";
 import NotFoundPage from "./routes/NotFound";
 import ContactPage from "./routes/ContactPage";
+
+import s from "./style.module.css";
 
 const App = () => {
   const match = useRouteMatch('/');
