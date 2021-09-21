@@ -1,8 +1,5 @@
-import { useRouteMatch, Route, Switch, Redirect } from "react-router";
+import { useLocation, Route, Switch, Redirect } from "react-router";
 import cn from 'classnames';
-// import { firebaseApp } from "./service/firebase";
-// import { database } from "./service/firebase";
-// import { get, child, ref} from "firebase/database"
 
 import HomePage from "./routes/HomePage";
 import GamePage from "./routes/GamePage";
@@ -17,17 +14,17 @@ import Firebase from "./service/firebase"
 import s from "./style.module.css";
 
 const App = () => {
-  const match = useRouteMatch('/');
-
+  const location = useLocation();
+  const isPadding = location.pathname === '/' || location.pathname === '/game/board';
   return (
     <FireBaseContext.Provider value = {new Firebase()} >
       <Switch>
         <Route path="/404" component={NotFoundPage} />
         <Route>
           <>
-            <MenuHeader bgActive={!match.isExact} />
+            <MenuHeader bgActive={!isPadding} />
             <div className={cn(s.wrap, {
-              [s.isHomePage]: match.isExact
+              [s.isHomePage]: isPadding
             })}>
               <Switch>
                 <Route path="/" exact component={HomePage} />

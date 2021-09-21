@@ -1,3 +1,20 @@
+.flex {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 40px;
+}
+
+.buttonWrap {
+  text-align: center;
+  padding: 2rem;
+}
+
+.card {
+  width: 100%;
+  height: 380px;
+  cursor: pointer;
+}
+
 .pokemonCard {
     --fire: #FDDFDF;
     --grass: #DEFDE0;
@@ -36,8 +53,7 @@
 }
 
 .pokemonCard.selected {
-    margin-top: -20px;
-    margin-bottom: 20px;;
+    margin-top: -40px;
 }
 
 .cardFront,
@@ -59,11 +75,6 @@
 .cardFront {
     transform: rotateY(0deg);
     z-index: 2;
-}
-
-.pokemonCard:active .wrap.front::after,
-.pokemonCard:focus .wrap.front::after {
-    background-color: (--rock);
 }
 
 .wrap {
@@ -94,7 +105,7 @@
 
 .wrap.back {
     z-index: -1;
-    background-image: url(./assets/card-back-side.jpg);
+    background-image: url(../../../../assets/card-back-side.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
