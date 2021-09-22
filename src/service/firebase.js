@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { getDatabase, ref, child, get, set, push, onValue } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAV4byPzlGzsM0ufr2_WLrkkJSEZI2DrxU",
@@ -12,4 +12,34 @@ const firebaseConfig = {
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);
-export const database = getDatabase();
+
+class Firebase {
+  constructor() {
+    this.database = getDatabase();
+    this.dbRef = ref(this.database);
+  }
+
+  getPokemonSoket = (callback) => {
+    onValue((ref(this.database, `pokemons`)), (snapshot) => {
+      callback(snapshot.val())
+    });
+  }
+
+  getPokemonsOnce = async () => {
+    return await get(child(this.dbRef, `pokemons`)).then((snapshot) => snapshot.val());
+  }
+
+  postPokemon = (key, pokemon) => {
+    set(ref(this.database, `pokemons/${key}`), pokemon);
+  }
+
+  addPokemon = (dataPoks, callback) => {
+    const getRandomPokemon = (num) => Math.ceil(Math.random() * num);
+    const newPokemonKey = push(child(this.dbRef, 'pokemons')).key;
+
+    set(ref(this.database, `pokemons/${newPokemonKey}`),
+      dataPoks[getRandomPokemon((dataPoks.length) - 1)]
+    )
+  }
+}
+export default Firebase;
