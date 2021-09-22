@@ -11,7 +11,6 @@ const StartPage = () => {
   const firebase = useContext(FireBaseContext);
   const pokemonContext = useContext(PokemonContext);
   const history = useHistory();
-
   const [pokemons, setPokemons] = useState({})
 
   useEffect(() => {
@@ -19,7 +18,6 @@ const StartPage = () => {
       setPokemons(pokemons);
     })
   }, [])
-
 
   const onClickCard = (key) => {
     const pokemon= {...pokemons[key]}

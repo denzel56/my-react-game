@@ -1,6 +1,4 @@
-// import { useState } from 'react';
 import cn from 'classnames';
-import cardBack from './assets/card-back-side.jpg';
 import s from './style.module.css';
 
 

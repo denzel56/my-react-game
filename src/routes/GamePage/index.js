@@ -1,5 +1,5 @@
-import { useRouteMatch, Switch, Route } from "react-router";
-import { useState, useEffect, useContext } from "react";
+import { useRouteMatch, Switch, Route , useLocation} from "react-router";
+import { useState } from "react";
 
 import StartPage from "./routes/StartPage";
 import BoardPage from "./routes/BoardPage";
@@ -30,7 +30,8 @@ const GamePage = () => {
   return (
     <PokemonContext.Provider value={{
       pokemons: selectedPokemons,
-      onSelected: handleSelectPokemon
+      onSelected: handleSelectPokemon,
+      clearContext: setSelectedPokemons
     }}>
       <Switch>
         <Route path={`${match.path}/`} exact component={StartPage} />

@@ -1,17 +1,24 @@
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PokemonCards from '../../../../components/PokemonCards';
 import { PokemonContext } from '../../../../context/pokemonContext';
 import s from './style.module.css';
 
 const BoardPage = () => {
-  const { pokemons } = useContext(PokemonContext);
+  const { pokemons, clearContext } = useContext(PokemonContext);
+  const [smallCards, setSmallCards] = useState({});
+
+
+  useEffect(() => {
+    setSmallCards(pokemons);
+    clearContext(prevState => prevState = {})
+  }, [])
 
   return (
     <div className={s.root}>
       <div className={s.playerOne}>
         {
-          Object.values(pokemons).map(({ id, name, img, type, values }) => {
-           return <PokemonCards
+          Object.values(smallCards).map(({ id, name, img, type, values }) =>
+            <PokemonCards
               className={s.card}
               key={id}
               name={name}
@@ -22,7 +29,7 @@ const BoardPage = () => {
               minimize
               isActive
             />
-          })
+          )
         }
       </div>
       <div className={s.board}>
