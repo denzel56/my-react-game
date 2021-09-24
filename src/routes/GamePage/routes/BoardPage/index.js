@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-// import { useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import PokemonCards from '../../../../components/PokemonCards';
 import { PokemonContext } from '../../../../context/pokemonContext';
 import PlayerBoard from './component/PlayerBoard';
@@ -23,7 +23,7 @@ const counterWin = (board, player1, player2) => {
 }
 
 const BoardPage = () => {
-  const { pokemons, clearContext } = useContext(PokemonContext);
+  const { pokemons, clearContext, setGameResult, setPokemonsP2 } = useContext(PokemonContext);
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
     return Object.values(pokemons).map((item) => ({
@@ -35,18 +35,18 @@ const BoardPage = () => {
   const [choiseCard, setChoiseCard] = useState(null);
   const [steps, setSteps] = useState(0);
   // const [smallCards, setSmallCards] = useState({});
-  // const history = useHistory();
+  const history = useHistory();
 
 
   useEffect(async () => {
     const boardResponse = await fetch('https://reactmarathon-api.netlify.app/api/board');
     const boardRequest = await boardResponse.json();
-    // setSmallCards(pokemons);
-    // clearContext(prevState => prevState = {})
     setBoard(boardRequest.data);
 
     const player2Response = await fetch('https://reactmarathon-api.netlify.app/api/create-player');
     const player2Request = await player2Response.json();
+
+    setPokemonsP2(player2Request.data);
 
     setPlayer2(() => {
       return player2Request.data.map((item) => ({
@@ -56,11 +56,11 @@ const BoardPage = () => {
     });
   }, [])
 
-  // if (Object.keys(pokemons).length === 0) {
-  //   history.replace('/game');
-  // }
+
+  if (Object.keys(pokemons).length === 0) {
+    history.replace('/game');
+  }
   const handleClickBoardPlate = async (position) => {
-    console.log('position', choiseCard);
 
     if (choiseCard) {
       const params = {
@@ -78,7 +78,6 @@ const BoardPage = () => {
       });
 
       const request = await res.json();
-      console.log('req', request);
 
       if (choiseCard.player === 1) {
         setPlayer1(prevState => prevState.filter(item => item.id !== choiseCard.id))
@@ -102,11 +101,17 @@ const BoardPage = () => {
 
       if (count1 > count2) {
         alert('Win');
+        setGameResult('player1');
+        // history.push('/game/finish');
       } else if (count1 < count2) {
         alert('Lose');
+        setGameResult('player2');
+        // history.push('/game/finish')
       } else {
         alert('Draw');
+        setGameResult('draw');
       }
+      history.push('/game/finish')
     }
   }, [steps])
   return (

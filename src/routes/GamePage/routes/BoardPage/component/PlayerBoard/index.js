@@ -5,6 +5,7 @@ import s from "./style.module.css";
 
 const PlayerBoard = ({player, cards, onClickCard}) => {
   const [isSelected, setSelected] = useState(null);
+
   return (
     <>
       {
@@ -19,9 +20,8 @@ const PlayerBoard = ({player, cards, onClickCard}) => {
                 player
               })
             }}
-          >
+            key={item.id}>
             <PokemonCards
-              key={item.id}
               name={item.name}
               img={item.img}
               id={item.id}
