@@ -3,26 +3,37 @@ import { PokemonContext } from "../../../../context/pokemonContext";
 import PokemonCards from "../../../../components/PokemonCards";
 import cn from "classnames";
 
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { FireBaseContext } from "../../../../context/firebaseContext";
 import s from "./style.module.css";
-import { useEffect } from "react";
 
 const FinishPage = () => {
   const pokemonContext = useContext(PokemonContext);
   const firebase = useContext(FireBaseContext);
 
-  let takeCard;
   const history = useHistory();
+  let takeCard = null;
+
+  if (Object.keys(pokemonContext.pokemonsP2).length === 0) {
+    history.replace('/game');
+  }
 
   const handleClickTrophyCard = (card) => {
     takeCard = card;
-    console.log('win card', card);
+
+    pokemonContext.setPokemonsP2(pokemonContext.pokemonsP2.reduce((acc, item) => {
+      if (item.id === card.id) {
+        item.isSelected = !item.isSelected;
+      }
+      acc.push(item);
+      return acc;
+      }, []))
+    console.log('p2', pokemonContext.pokemonsP2);
   }
   const handleFinishGame = () => {
-    console.log('pokemons', pokemonContext);
+    // console.log('pokemonsP2', pokemonContext.pokemonsP);
     console.log('location start-page');
-    console.log('my card', takeCard);
+    // console.log('my card', takeCard);
     if(takeCard) {
       firebase.addPokemon(takeCard);
     }
@@ -59,12 +70,7 @@ const FinishPage = () => {
         {
           pokemonContext.pokemonsP2.map((item) => (
             <div className={cn(s.card, s.pokemonCard)}
-              onClick={() => {
-                if (pokemonContext.gameResult === 'player1') {
-                  handleClickTrophyCard(item);
-                }
-              }}
-              disabled
+
               key={item.id}>
               <PokemonCards
                 name={item.name}
@@ -73,7 +79,10 @@ const FinishPage = () => {
                 type={item.type}
                 values={item.values}
                 isActive
-                isSelected={false}
+                onClickCard={() => {
+                  handleClickTrophyCard(item)
+                }}
+                isSelected={item.isSelected}
               />
             </div>)
           )
