@@ -1,42 +1,44 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { PokemonContext } from "../../../../context/pokemonContext";
 import PokemonCards from "../../../../components/PokemonCards";
 import cn from "classnames";
 
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import { FireBaseContext } from "../../../../context/firebaseContext";
 import s from "./style.module.css";
 
 const FinishPage = () => {
   const pokemonContext = useContext(PokemonContext);
   const firebase = useContext(FireBaseContext);
+  const [giftCard, setGiftCard] = useState(null);
 
   const history = useHistory();
-  let takeCard = null;
 
   if (Object.keys(pokemonContext.pokemonsP2).length === 0) {
     history.replace('/game');
   }
 
   const handleClickTrophyCard = (card) => {
-    takeCard = card;
+
+    setGiftCard(card);
 
     pokemonContext.setPokemonsP2(pokemonContext.pokemonsP2.reduce((acc, item) => {
       if (item.id === card.id) {
         item.isSelected = !item.isSelected;
+      } else {
+        item.isSelected = false;
       }
       acc.push(item);
       return acc;
       }, []))
-    console.log('p2', pokemonContext.pokemonsP2);
+
   }
   const handleFinishGame = () => {
-    // console.log('pokemonsP2', pokemonContext.pokemonsP);
-    console.log('location start-page');
-    // console.log('my card', takeCard);
-    if(takeCard) {
-      firebase.addPokemon(takeCard);
+    if (giftCard) {
+      giftCard.isSelected = false;
+      firebase.addPokemon(giftCard);
     }
+
     pokemonContext.clearContext();
     history.replace('/game');
   }
@@ -61,7 +63,10 @@ const FinishPage = () => {
       </div>
 
       <div className={s.buttonWrap}>
-        <button onClick={handleFinishGame} >
+        <button
+          onClick={handleFinishGame}
+          disabled={giftCard === null && pokemonContext.gameResult === 'player1'}
+        >
             End Game
         </button>
       </div>
@@ -80,7 +85,9 @@ const FinishPage = () => {
                 values={item.values}
                 isActive
                 onClickCard={() => {
-                  handleClickTrophyCard(item)
+                  if (pokemonContext.gameResult === 'player1') {
+                    handleClickTrophyCard(item)
+                  }
                 }}
                 isSelected={item.isSelected}
               />
