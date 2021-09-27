@@ -17,6 +17,7 @@ const StartPage = () => {
     firebase.getPokemonSoket((pokemons) => {
       setPokemons(pokemons);
     })
+    pokemonContext.clearContext();
   }, [])
 
   const onClickCard = (key) => {

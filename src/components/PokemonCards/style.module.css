@@ -23,7 +23,7 @@
 }
 
 .pokemonCard.active {
-    animation: flipFront 1000ms 300ms forwards;
+    transform: rotateY(0deg);
 }
 
 @keyframes flipFront {
@@ -36,8 +36,13 @@
 }
 
 .pokemonCard.selected {
+
     margin-top: -20px;
-    margin-bottom: 20px;;
+    margin-bottom: 20px;
+}
+.pokemonCard.selected .wrap.front::after {
+    content: '';
+    border-color: #a8caea;
 }
 
 .cardFront,
@@ -165,7 +170,12 @@
 .normal {
     background-color: var(--normal);
 }
-
+.blue {
+    background-color: #a8caea;
+}
+.red {
+    background-color: #d998b2;
+}
 .pokemon .imgContainer {
     background-color: rgba(255, 255, 255, 0.6);
     border-radius: 50%;

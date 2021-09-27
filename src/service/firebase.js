@@ -33,12 +33,11 @@ class Firebase {
     set(ref(this.database, `pokemons/${key}`), pokemon);
   }
 
-  addPokemon = (dataPoks, callback) => {
-    const getRandomPokemon = (num) => Math.ceil(Math.random() * num);
+  addPokemon = (newPokemon) => {
     const newPokemonKey = push(child(this.dbRef, 'pokemons')).key;
 
     set(ref(this.database, `pokemons/${newPokemonKey}`),
-      dataPoks[getRandomPokemon((dataPoks.length) - 1)]
+      newPokemon
     )
   }
 }
