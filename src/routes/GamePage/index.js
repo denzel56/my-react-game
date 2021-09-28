@@ -6,30 +6,32 @@ import BoardPage from "./routes/BoardPage";
 import FinishPage from "./routes/FinishPage";
 import { PokemonContext } from "../../context/pokemonContext";
 
-
-
 const GamePage = () => {
   const match = useRouteMatch();
+
   const [selectedPokemons, setSelectedPokemons] = useState({});
   const [pokemonsP2, setPokemonsP2] = useState({});
   const [gameResult, setGameResult] = useState({});
 
-  const handleSelectPokemon = (key, pokemon) => {
+  // console.log('###s data', selectPokemonsData());
 
-    setSelectedPokemons(prevState => {
+  // const handleSelectPokemon = (key, pokemon) => {
 
-      if (prevState[key]) {
-        const copyState = { ...prevState };
-        delete copyState[key];
+    // setSelectedPokemons(prevState => {
 
-        return copyState;
-      }
-      return {
-        ...prevState,
-        [key]: pokemon
-      }
-    })
-  }
+
+    //   if (prevState[key]) {
+    //     const copyState = { ...prevState };
+    //     delete copyState[key];
+
+    //     return copyState;
+    //   }
+    //   return {
+    //     ...prevState,
+    //     [key]: pokemon
+    //   }
+    // })
+  // }
 
   const handleResult = (result) => {
     setGameResult(result);
@@ -45,8 +47,8 @@ const GamePage = () => {
 
   return (
     <PokemonContext.Provider value={{
-      pokemons: selectedPokemons,
-      onSelected: handleSelectPokemon,
+      // pokemons: selectedPokemons,
+      // onSelected: handleSelectPokemon,
       pokemonsP2: pokemonsP2,
       gameResult: gameResult,
       setPokemonsP2: handlePokemonsP2,
