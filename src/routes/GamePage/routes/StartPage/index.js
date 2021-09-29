@@ -1,19 +1,16 @@
-import { useState, useEffect, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 
 import PokemonCards from "../../../../components/PokemonCards"
 
-// import { FireBaseContext } from "../../../../context/firebaseContext";
-import { PokemonContext } from "../../../../context/pokemonContext";
+import { useDispatch, useSelector } from "react-redux";
 import { getPokemonsAsync, selectPokemonsData } from "../../../../store/pokemons";
 import { selectedPokemonsData, addPokemon, cleanPokemons } from "../../../../store/selectedPokemons";
+
 import s from "./style.module.css";
+import { cleanPokemonsPlayer2 } from "../../../../store/player2Pokemons";
 
 const StartPage = () => {
-  // const firebase = useContext(FireBaseContext);
-  const pokemonContext = useContext(PokemonContext);
-  // const isLoading = useSelector(selectPokemonsLoading);
   const pokemonsRedux = useSelector(selectPokemonsData);
   const selectedPokemonsRedux = useSelector(selectedPokemonsData);
   const dispatch = useDispatch();
@@ -23,6 +20,7 @@ const StartPage = () => {
 
 
   useEffect(() => {
+    dispatch(cleanPokemonsPlayer2());
     dispatch(cleanPokemons());
     dispatch(getPokemonsAsync());
   }, [dispatch])
@@ -32,6 +30,7 @@ const StartPage = () => {
   }, [pokemonsRedux]);
 
   const onClickCard = (key) => {
+
     const pokemon = { ...pokemons[key] }
 
       setPokemons(prevState => ({
@@ -44,17 +43,8 @@ const StartPage = () => {
 
       dispatch(addPokemon({
         ...selectedPokemonsRedux,
-        [key]: pokemon
+        [key]: pokemon,
       }));
-
-    // pokemonContext.onSelected(key, pokemon);
-    // setPokemons(prevState => ({
-    //   ...prevState,
-    //   [key]: {
-    //     ...prevState[key],
-    //     selected: !prevState[key].selected
-    //   }
-    // }))
   }
 
   const handleStartGame = () => {

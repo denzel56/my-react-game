@@ -15,10 +15,13 @@ export const slice = createSlice({
     noWinner: () => ({
       winner: 'draw',
     }),
+    cleanWinner: () => ({
+      winner: {},
+    }),
   },
 });
 
-export const { player1Win, player2Win, noWinner } = slice.actions;
+export const { player1Win, player2Win, noWinner, cleanWinner } = slice.actions;
 
 export const resultData = state => state.gameResult.winner;
 

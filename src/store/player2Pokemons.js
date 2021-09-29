@@ -22,11 +22,15 @@ export const slice = createSlice({
       isLoading: false,
       data: {},
       error: actions.payload,
+    }),
+    cleanPokemonsPlayer2: (state) => ({
+      ...state,
+      data: {},
     })
   },
 });
 
-export const { fetchPokemonsPlayer2, fetchPokemonsResolvePlayer2, fetchPokemonsRejectPlayer2 } = slice.actions;
+export const { fetchPokemonsPlayer2, fetchPokemonsResolvePlayer2, fetchPokemonsRejectPlayer2, cleanPokemonsPlayer2 } = slice.actions;
 
 export const selectPokemonsPlayer2Loading = state => state.player2.isLoading;
 export const selectPokemonsPlayer2Data = state => state.player2.data;
