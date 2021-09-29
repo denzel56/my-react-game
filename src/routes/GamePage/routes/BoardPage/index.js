@@ -48,24 +48,29 @@ const BoardPage = () => {
 
 
   useEffect(() => {
+
     async function fetchPokemonsP2() {
       const boardResponse = await fetch('https://reactmarathon-api.netlify.app/api/board');
       const boardRequest = await boardResponse.json();
       setBoard(boardRequest.data);
 
-      dispatch(getPlayer2PokemonsAsync());
-
-      setPlayer2(() => {
-        return player2Redux.map((item) => ({
-          ...item,
-          possession: 'red',
-        }))
-      });
     }
 
     fetchPokemonsP2();
   }, [])
 
+  useEffect(() => {
+    dispatch(getPlayer2PokemonsAsync());
+  }, [dispatch])
+
+  useEffect(() => {
+    setPlayer2(() => {
+      return player2Redux.map((item) => ({
+        ...item,
+        possession: 'red',
+      }));
+    });
+  }, [])
 
   if (Object.keys(selectedPokemonsRedux).length === 0) {
     history.replace('/game');
@@ -121,7 +126,7 @@ const BoardPage = () => {
       }
       history.push('/game/finish')
     }
-  }, [steps, board, history, player1, player2])
+  }, [steps, board, history, player1, player2, dispatch])
   return (
     <div className={s.root}>
       <div className={s.playerOne}>

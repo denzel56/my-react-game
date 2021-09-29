@@ -4,7 +4,7 @@ import cn from "classnames";
 
 import { useHistory } from "react-router";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectedPokemonsData } from "../../../../store/selectedPokemons";
 import { selectPokemonsPlayer2Data } from "../../../../store/player2Pokemons";
 import { resultData } from "../../../../store/gameResult";
@@ -16,7 +16,6 @@ const FinishPage = () => {
   const selectedPokemonsRedux = useSelector(selectedPokemonsData);
   const player2Redux = useSelector(selectPokemonsPlayer2Data);
   const winnerRedux = useSelector(resultData);
-  const dispatch = useDispatch();
 
   const [player2, setPlayer2] = useState([]);
   const [giftCard, setGiftCard] = useState(null);
@@ -29,7 +28,7 @@ const FinishPage = () => {
 
   useEffect(() => {
     setPlayer2(player2Redux);
-  }, []);
+  }, [player2Redux]);
 
 
 
@@ -56,7 +55,10 @@ const FinishPage = () => {
 
   const handleFinishGame = () => {
     if (giftCard) {
-      giftCard.isSelected = false;
+      setGiftCard({
+        ...giftCard,
+        isSelected: false,
+      })
       FirebaseClass.addPokemon(giftCard);
     }
 
