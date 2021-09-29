@@ -6,15 +6,25 @@ import cn from "classnames";
 import { useHistory } from "react-router";
 import { FireBaseContext } from "../../../../context/firebaseContext";
 import s from "./style.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { cleanPokemons, selectedPokemonsData } from "../../../../store/selectedPokemons";
+import { selectPokemonsPlayer2Data } from "../../../../store/player2Pokemons";
+import { resultData } from "../../../../store/gameResult";
 
 const FinishPage = () => {
-  const pokemonContext = useContext(PokemonContext);
-  const firebase = useContext(FireBaseContext);
+  // const pokemonContext = useContext(PokemonContext);
+  // const firebase = useContext(FireBaseContext);
+  const selectedPokemonsRedux = useSelector(selectedPokemonsData);
+  const player2Redux = useSelector(selectPokemonsPlayer2Data);
+  const winnerRedux = useSelector(resultData);
+  const dispatch = useDispatch();
+
+  const [player2, setPlayer2] = useState(player2Redux);
   const [giftCard, setGiftCard] = useState(null);
 
   const history = useHistory();
 
-  if (Object.keys(pokemonContext.pokemonsP2).length === 0) {
+  if (Object.keys(player2Redux).length === 0) {
     history.replace('/game');
   }
 
@@ -22,31 +32,31 @@ const FinishPage = () => {
 
     setGiftCard(card);
 
-    pokemonContext.setPokemonsP2(pokemonContext.pokemonsP2.reduce((acc, item) => {
-      if (item.id === card.id) {
-        item.isSelected = !item.isSelected;
-      } else {
-        item.isSelected = false;
-      }
-      acc.push(item);
-      return acc;
-      }, []))
-
+    setPlayer2(prevState => {
+      prevState.reduce((acc, item) => {
+        if (item.id === card.id) {
+          item.isSelected = !item.isSelected;
+        } else {
+          item.isSelected = false;
+        }
+        acc.push(item);
+        return acc;
+      }, [])
+    })
   }
   const handleFinishGame = () => {
     if (giftCard) {
       giftCard.isSelected = false;
-      firebase.addPokemon(giftCard);
+      // firebase.addPokemon(giftCard);
     }
-
-    pokemonContext.clearContext();
+    dispatch(cleanPokemons());
     history.replace('/game');
   }
   return (
     <>
           <div className={s.cardCont} >
             {
-              Object.values(pokemonContext.pokemons).map((item) => (
+              Object.values(selectedPokemonsRedux).map((item) => (
 
               <div className={s.card} key={item.id}>
                 <PokemonCards
@@ -65,7 +75,7 @@ const FinishPage = () => {
       <div className={s.buttonWrap}>
         <button
           onClick={handleFinishGame}
-          disabled={giftCard === null && pokemonContext.gameResult === 'player1'}
+          disabled={giftCard === null && winnerRedux === 'player1'}
         >
             End Game
         </button>
@@ -73,7 +83,7 @@ const FinishPage = () => {
 
       <div className={s.cardCont}>
         {
-          pokemonContext.pokemonsP2.map((item) => (
+          player2.map((item) => (
             <div className={cn(s.card, s.pokemonCard)}
 
               key={item.id}>
@@ -85,7 +95,7 @@ const FinishPage = () => {
                 values={item.values}
                 isActive
                 onClickCard={() => {
-                  if (pokemonContext.gameResult === 'player1') {
+                  if (winnerRedux === 'player1') {
                     handleClickTrophyCard(item)
                   }
                 }}

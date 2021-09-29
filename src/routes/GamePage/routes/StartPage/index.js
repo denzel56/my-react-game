@@ -7,7 +7,7 @@ import PokemonCards from "../../../../components/PokemonCards"
 // import { FireBaseContext } from "../../../../context/firebaseContext";
 import { PokemonContext } from "../../../../context/pokemonContext";
 import { getPokemonsAsync, selectPokemonsData } from "../../../../store/pokemons";
-import { selectedPokemonsData, addPokemon } from "../../../../store/selectedPokemons";
+import { selectedPokemonsData, addPokemon, cleanPokemons } from "../../../../store/selectedPokemons";
 import s from "./style.module.css";
 
 const StartPage = () => {
@@ -21,9 +21,10 @@ const StartPage = () => {
 
   const [pokemons, setPokemons] = useState({})
 
+
   useEffect(() => {
+    dispatch(cleanPokemons());
     dispatch(getPokemonsAsync());
-    // dispatch(cleanPokemons());
   }, [dispatch])
 
   useEffect(() => {
