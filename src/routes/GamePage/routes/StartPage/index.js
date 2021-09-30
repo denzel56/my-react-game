@@ -6,10 +6,9 @@ import PokemonCards from "../../../../components/PokemonCards"
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemonsAsync, selectPokemonsData } from "../../../../store/pokemons";
 import { selectedPokemonsData, addPokemon, cleanPokemons } from "../../../../store/selectedPokemons";
-import { cleanPokemonsPlayer2 } from "../../../../store/player2Pokemons";
-import { cleanWinner } from "../../../../store/gameResult";
 
 import s from "./style.module.css";
+import { cleanPokemonsPlayer2 } from "../../../../store/player2Pokemons";
 
 const StartPage = () => {
   const pokemonsRedux = useSelector(selectPokemonsData);
@@ -21,8 +20,7 @@ const StartPage = () => {
 
 
   useEffect(() => {
-    dispatch(cleanWinner());
-    dispatch(cleanPokemonsPlayer2());
+    // dispatch(cleanPokemonsPlayer2());
     dispatch(cleanPokemons());
     dispatch(getPokemonsAsync());
   }, [dispatch])

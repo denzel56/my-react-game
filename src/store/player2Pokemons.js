@@ -23,20 +23,16 @@ export const slice = createSlice({
       data: {},
       error: actions.payload,
     }),
-    cleanPokemonsPlayer2: (state) => ({
-      ...state,
-      data: {},
-    })
   },
 });
 
-export const { fetchPokemonsPlayer2, fetchPokemonsResolvePlayer2, fetchPokemonsRejectPlayer2, cleanPokemonsPlayer2 } = slice.actions;
+export const { fetchPokemonsPlayer2, fetchPokemonsResolvePlayer2, fetchPokemonsRejectPlayer2 } = slice.actions;
 
 export const selectPokemonsPlayer2Loading = state => state.player2.isLoading;
 export const selectPokemonsPlayer2Data = state => state.player2.data;
 
 export const getPlayer2PokemonsAsync = () => async (dispatch) => {
-  dispatch(fetchPokemonsPlayer2());
+  // dispatch(fetchPokemonsPlayer2());
   const data = await fetch('https://reactmarathon-api.netlify.app/api/create-player').then(res => res.json());
   dispatch(fetchPokemonsResolvePlayer2(data.data));
 }
