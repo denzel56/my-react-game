@@ -7,13 +7,14 @@ import POKEMONS from '../../data/pokemons.json';
 
 import s from './style.module.css';
 
+
 function HomePage() {
 
   return (
     <>
       <Header
-        title = "Pokemon Card Game"
-        descr = "Simple game on React"
+        title="Pokemon Card Game"
+        descr="Simple game on React"
       />
       <Layout
         title = "Game rules"

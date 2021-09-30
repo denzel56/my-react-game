@@ -4,9 +4,14 @@ import Menu from '../Menu';
 
 const MenuHeader = ({bgActive}) => {
   const [isOpen, setOpen] = useState(null);
+  const [isOpenModal, setOpenModal] = useState(null);
 
   const handleClickHamburger = () => {
     setOpen(prevState => !prevState);
+  }
+
+  const handleClickLogin = () => {
+    setOpenModal(prevState => !prevState);
   }
 
   return (
@@ -14,7 +19,8 @@ const MenuHeader = ({bgActive}) => {
       <Navbar
         onClickHamburger = {handleClickHamburger}
         isOpen = {isOpen}
-        bgActive = {bgActive}
+        bgActive={bgActive}
+        onClikLogin={handleClickLogin}
       />
       <Menu
         isOpen = {isOpen}
