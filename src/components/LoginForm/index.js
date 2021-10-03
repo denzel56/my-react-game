@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import s from './style.module.css';
 
-const LoginForm = ({ onSubmit, onRegister, buttonTitle, linkTitle, isOpenModal }) => {
+const LoginForm = ({ onSubmit, isOpenModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLogin, setLogin] = useState(true);
 
   useEffect(() => {
     if (isOpenModal === false) {
@@ -15,16 +16,10 @@ const LoginForm = ({ onSubmit, onRegister, buttonTitle, linkTitle, isOpenModal }
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit && onSubmit({
+      type: isLogin ? 'login' : 'signup',
       email,
       password
     })
-    setEmail('');
-    setPassword('');
-  }
-
-  const handleClickLink = (e) => {
-    e.preventDefault();
-    onRegister && onRegister();
     setEmail('');
     setPassword('');
   }
@@ -57,13 +52,17 @@ const LoginForm = ({ onSubmit, onRegister, buttonTitle, linkTitle, isOpenModal }
           <label className={s.label}>Password</label>
         </div>
         <div className={s.flex}>
-        <button>
-          {buttonTitle}
-        </button>
+          <button>
+            {
+              isLogin ? 'Signin' : 'Signup'
+            }
+          </button>
           <a
-            onClick={handleClickLink}
+            onClick={() => setLogin(!isLogin)}
           >
-            {linkTitle}
+            {
+              isLogin ? 'Register' : 'Login'
+            }
           </a>
         </div>
       </form>
