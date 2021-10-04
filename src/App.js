@@ -11,13 +11,21 @@ import AboutPage from "./routes/About";
 import NotFoundPage from "./routes/NotFound";
 import ContactPage from "./routes/ContactPage";
 
-import s from "./style.module.css";
 import PrivateRoute from "./components/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getUserAsync } from "./store/user";
+
+import s from "./style.module.css";
 
 const App = () => {
   const location = useLocation();
   const isPadding = location.pathname === '/' || location.pathname === '/game/board';
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getUserAsync());
+  }, [])
   return (
     <>
       <Switch>
@@ -34,7 +42,7 @@ const App = () => {
               <PrivateRoute path="/game" component={GamePage} />
               <PrivateRoute path="/about" component={AboutPage} />
               <PrivateRoute path="/contact" component={ContactPage} />
-              <PrivateRoute render={() => {
+              <Route render={() => {
                 <Redirect to="/404" />;
               } } />
             </Switch>
