@@ -61,12 +61,14 @@ const BoardPage = () => {
     }
 
     fetchPokemonsP2();
+
     setPlayer2(() => {
       return player2Redux.map((item) => ({
         ...item,
         possession: 'red',
       }));
     });
+
   }, [player2Redux])
 
   if (Object.keys(selectedPokemonsRedux).length === 0) {

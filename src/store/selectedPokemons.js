@@ -11,9 +11,7 @@ export const slice = createSlice({
       ...state,
       data: actions.payload,
     }),
-    delPokemon: (state, actions) => (
-      delete state[actions.payload]
-    ),
+
     cleanPokemons: () => ({
       data: {}
     }),

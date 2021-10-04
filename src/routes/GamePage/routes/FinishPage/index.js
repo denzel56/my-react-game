@@ -28,7 +28,7 @@ const FinishPage = () => {
 
   useEffect(() => {
     setPlayer2(player2Redux);
-  }, []);
+  }, [player2Redux]);
 
 
 

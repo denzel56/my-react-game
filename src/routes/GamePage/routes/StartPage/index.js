@@ -8,7 +8,6 @@ import { getPokemonsAsync, selectPokemonsData } from "../../../../store/pokemons
 import { selectedPokemonsData, addPokemon, cleanPokemons } from "../../../../store/selectedPokemons";
 
 import s from "./style.module.css";
-import { cleanPokemonsPlayer2 } from "../../../../store/player2Pokemons";
 
 const StartPage = () => {
   const pokemonsRedux = useSelector(selectPokemonsData);
@@ -16,11 +15,11 @@ const StartPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [pokemons, setPokemons] = useState({})
+  const [pokemons, setPokemons] = useState({});
 
 
   useEffect(() => {
-    // dispatch(cleanPokemonsPlayer2());
+
     dispatch(cleanPokemons());
     dispatch(getPokemonsAsync());
   }, [dispatch])
@@ -31,20 +30,21 @@ const StartPage = () => {
 
   const onClickCard = (key) => {
 
-    const pokemon = { ...pokemons[key] }
+    const pokemon = { ...pokemons[key] };
 
     dispatch(addPokemon({
       ...selectedPokemonsRedux,
       [key]: pokemon,
     }));
 
-      setPokemons(prevState => ({
-        ...prevState,
-        [key]: {
-          ...prevState[key],
-          selected: !prevState[key].selected
-        }
-      }))
+
+    setPokemons(prevState => ({
+      ...prevState,
+      [key]: {
+        ...prevState[key],
+        selected: !prevState[key].selected
+      }
+    }))
 
   }
 
