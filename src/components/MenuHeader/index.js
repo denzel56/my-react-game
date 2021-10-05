@@ -4,6 +4,8 @@ import Menu from '../Menu';
 import Modal from '../Modal';
 import LoginForm from '../LoginForm';
 import NotificationManager from 'react-notifications/lib/NotificationManager';
+import { useDispatch } from 'react-redux';
+import { getUserUpdateAsync } from '../../store/user';
 
 const loginUser = async ({ email, password, type }) => {
   const requestOptions = {
@@ -28,6 +30,9 @@ const loginUser = async ({ email, password, type }) => {
 const MenuHeader = ({bgActive}) => {
   const [isOpen, setOpen] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+  // const state = useStore();
+  // console.log('### state', state.getState());
 
 
   const handleClickHamburger = () => {
@@ -56,10 +61,10 @@ const MenuHeader = ({bgActive}) => {
           })
         }
       }
-
       localStorage.setItem('idToken', response.idToken);
       NotificationManager.success('Success!');
-      setOpenModal(false);
+      dispatch(getUserUpdateAsync());
+      handleClickLogin();
     }
   }
 

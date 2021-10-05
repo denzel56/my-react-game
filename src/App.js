@@ -12,20 +12,26 @@ import NotFoundPage from "./routes/NotFound";
 import ContactPage from "./routes/ContactPage";
 
 import PrivateRoute from "./components/PrivateRoute";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getUserAsync } from "./store/user";
+import { getUserAsync, selectorUserLoading } from "./store/user";
 
 import s from "./style.module.css";
 
 const App = () => {
+  const isUseLoading = useSelector(selectorUserLoading);
   const location = useLocation();
   const isPadding = location.pathname === '/' || location.pathname === '/game/board';
   const dispatch = useDispatch();
+  console.log('### isUserLoading', isUseLoading);
 
   useEffect(() => {
     dispatch(getUserAsync());
   }, [])
+
+  if (isUseLoading) {
+    return 'Loading...'
+  }
   return (
     <>
       <Switch>
