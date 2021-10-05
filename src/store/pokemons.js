@@ -36,10 +36,9 @@ export const selectPokemonsData = state => state.pokemons.data;
 export const getPokemonsAsync = () => async (dispatch, getState) => {
   const localId = selectUserLocalId(getState());
   dispatch(fetchPokemons());
-  // const data = await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/NsObxzKx0HQ4JgE2gHBWgLFCZ7r2/pokemons.json`).then(res => res.json());
+
   const data = await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${localId}/pokemons.json`).then(res => res.json());
-  console.log('### local id', localId);
-  console.log('### data', data);
+
   dispatch(fetchPokemonsResolve(data));
 }
 

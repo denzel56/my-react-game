@@ -10,7 +10,6 @@ import { selectPokemonsPlayer2Data } from "../../../../store/player2Pokemons";
 import { resultData } from "../../../../store/gameResult";
 
 import s from "./style.module.css";
-// import FirebaseClass from "../../../../service/firebase";
 
 const FinishPage = () => {
   const selectedPokemonsRedux = useSelector(selectedPokemonsData);
@@ -18,7 +17,7 @@ const FinishPage = () => {
   const winnerRedux = useSelector(resultData);
   const reduxStore = useStore();
   const store = reduxStore.getState();
-  console.log('### store id', store);
+
   const [player2, setPlayer2] = useState([]);
   const [giftCard, setGiftCard] = useState(null);
 
@@ -69,9 +68,8 @@ const FinishPage = () => {
         method: 'POST',
         body: JSON.stringify(giftCard),
       }
-      const resp = await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${userId}/pokemons.json?auth=${idToken}`, requestOptions).then(res => res.json());
-      // FirebaseClass.addPokemon(giftCard);
-      console.log('### finish resp', resp);
+      await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${userId}/pokemons.json?auth=${idToken}`, requestOptions).then(res => res.json());
+
     }
 
     history.replace('/game');
