@@ -1,16 +1,24 @@
-import { useStore } from "react-redux";
+import { useDispatch, useStore } from "react-redux";
 import { useHistory } from "react-router";
+import { removeUser } from "../../store/user";
 
 import s from './style.module.css';
 
 const UserPage = () => {
   const reduxStore = useStore();
+  const dispatch = useDispatch();
   const store = reduxStore.getState();
   const history = useHistory();
+
   const handleClickButton = () => {
     history.push('/');
   }
 
+  const handleClickLogOut = () => {
+    dispatch(removeUser());
+    localStorage.removeItem('idToken');
+    history.push('/');
+  }
   const dateVisit = store.user.data.lastLoginAt;
   const dateCreate = store.user.data.createdAt;
   const date = new Date(parseInt(dateCreate));
@@ -30,11 +38,7 @@ const UserPage = () => {
             Back to HomePage
           </button>
           <button
-            onClick={() => {
-              history.push('/');
-              localStorage.removeItem('idToken');
-              window.location.reload();
-            }}>
+            onClick={handleClickLogOut}>
             Log out
           </button>
         </div>
