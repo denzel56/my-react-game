@@ -4,6 +4,8 @@ import Menu from '../Menu';
 import Modal from '../Modal';
 import LoginForm from '../LoginForm';
 import NotificationManager from 'react-notifications/lib/NotificationManager';
+import { useDispatch } from 'react-redux';
+import { getUserUpdateAsync } from '../../store/user';
 
 const loginUser = async ({ email, password, type }) => {
   const requestOptions = {
@@ -28,6 +30,9 @@ const loginUser = async ({ email, password, type }) => {
 const MenuHeader = ({bgActive}) => {
   const [isOpen, setOpen] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
+  // const state = useStore();
+  // console.log('### state', state.getState());
 
 
   const handleClickHamburger = () => {
@@ -45,9 +50,21 @@ const MenuHeader = ({bgActive}) => {
     if (response.hasOwnProperty('error')) {
       NotificationManager.error(response.error.message, 'oops');
     } else {
+      if (props.type === 'signup') {
+        const pokemonStart = await fetch(' https://reactmarathon-api.herokuapp.com/api/pokemons/starter').then(res => res.json());
+        console.log('### start', pokemonStart);
+
+        for (const item of pokemonStart.data) {
+          await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${response.localId}/pokemons.json?auth=${response.idToken}`, {
+            method: 'POST',
+            body: JSON.stringify(item),
+          })
+        }
+      }
       localStorage.setItem('idToken', response.idToken);
       NotificationManager.success('Success!');
-      setOpenModal(false);
+      dispatch(getUserUpdateAsync());
+      handleClickLogin();
     }
   }
 

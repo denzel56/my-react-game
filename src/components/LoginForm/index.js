@@ -57,8 +57,11 @@ const LoginForm = ({ onSubmit, isOpenModal }) => {
               isLogin ? 'Signin' : 'Signup'
             }
           </button>
-          <a
-            onClick={() => setLogin(!isLogin)}
+          <a href='s#'
+            onClick={(e) => {
+              e.preventDefault();
+              setLogin(!isLogin);
+            }}
           >
             {
               isLogin ? 'Register' : 'Login'
