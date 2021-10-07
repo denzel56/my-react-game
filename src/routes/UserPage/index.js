@@ -19,6 +19,7 @@ const UserPage = () => {
     localStorage.removeItem('idToken');
     history.push('/');
   }
+
   const dateVisit = store.user.data.lastLoginAt;
   const dateCreate = store.user.data.createdAt;
   const date = new Date(parseInt(dateCreate));
