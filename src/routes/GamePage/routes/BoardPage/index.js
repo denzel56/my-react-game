@@ -75,7 +75,9 @@ const BoardPage = () => {
       })
 
       setTimeout(() => {
-        setStartSide(1);
+        setStartSide(() => {
+          return Math.ceil(Math.random() * 2);
+        });
       }, 2000)
 
       dispatch(fetchPokemonsResolvePlayer2(player2Request.data));
@@ -90,6 +92,59 @@ const BoardPage = () => {
 
     fetchPokemonsP2();
 
+
+  }, [])
+
+
+  useEffect(async () => {
+
+    if (startSide === 2) {
+      const params = {
+        currentPlayer: 'p2',
+        hands: {
+          p1: player1,
+          p2: player2,
+        },
+        move: null,
+        board: serverBoard,
+      };
+      const game = await fetch('https://reactmarathon-api.herokuapp.com/api/pokemons/game', {
+        method: 'POST',
+        body: JSON.stringify(params)
+      }).then(res => res.json());
+
+      console.log('### p2', game);
+
+      if (game.move !== null) {
+        const idAi = game.move.poke.id;
+
+        setTimeout(() => {
+          setPlayer2(prevState => prevState.map(item => {
+            if (item.id === idAi) {
+              return item = {
+                ...item,
+                selected: true,
+              }
+            }
+
+            return item;
+          }));
+        }, 1000)
+
+
+        setTimeout(() => {
+          setPlayer2(() => game.hands.p2.pokes.map(item => item.poke));
+          setServerBoard(game.board);
+          setBoard(returnBoard(game.board));
+
+          setSteps(prevState => {
+            const count = prevState + 1;
+            return count;
+          })
+
+        }, 2000)
+      }
+    };
 
   }, [])
 
@@ -111,23 +166,9 @@ const BoardPage = () => {
         board: serverBoard,
       };
 
-      // const res = await fetch('https://reactmarathon-api.netlify.app/api/players-turn', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(params),
-      // });
-
-      // const request = await res.json();
-
       if (choiseCard.player === 1) {
         setPlayer1(prevState => prevState.filter(item => item.id !== choiseCard.id));
       }
-
-      // if (choiseCard.player === 2) {
-      //   setPlayer2(prevState => prevState.filter(item => item.id !== choiseCard.id));
-      // }
 
       setBoard(prevState => prevState.map(item => {
         if (item.position === position) {
@@ -218,6 +259,7 @@ const BoardPage = () => {
         <PlayerBoard
           player={2}
           cards={player2}
+          // onClickCard={(card) => setChoiseCard(card)}
         />
       </div>
       <div className={s.board}>
