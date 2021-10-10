@@ -21,7 +21,7 @@ class Request {
   game = async (data) => {
     return await fetch(`${this.host}/pokemons/game`, {
       method: 'POST',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     }).then(res => res.json());
   }
 }

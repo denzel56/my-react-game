@@ -33,10 +33,8 @@ const counterWin = (board, player1, player2) => {
 }
 
 const BoardPage = () => {
-  // const reduxStore = useStore();
-  // const store = reduxStore.getState();
+
   const selectedPokemonsRedux = useSelector(selectedPokemonsData);
-  // const player2Redux = useSelector(selectPokemonsPlayer2Data);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -58,11 +56,6 @@ const BoardPage = () => {
   const [serverBoard, setServerBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
 
-
-  // useEffect(() => {
-  //   dispatch(getPlayer2PokemonsAsync());
-  // }, [dispatch])
-
   useEffect(() => {
 
     async function fetchPokemonsP2() {
@@ -75,10 +68,8 @@ const BoardPage = () => {
       })
 
       setTimeout(() => {
-        setStartSide(() => {
-          return Math.ceil(Math.random() * 2);
-        });
-      }, 2000)
+        setStartSide(Math.floor(Math.random() * 2) + 1);
+      }, 1500)
 
       dispatch(fetchPokemonsResolvePlayer2(player2Request.data));
 
@@ -98,55 +89,58 @@ const BoardPage = () => {
 
   useEffect(async () => {
 
-    if (startSide === 2) {
-      const params = {
-        currentPlayer: 'p2',
-        hands: {
-          p1: player1,
-          p2: player2,
-        },
-        move: null,
-        board: serverBoard,
-      };
-      const game = await fetch('https://reactmarathon-api.herokuapp.com/api/pokemons/game', {
-        method: 'POST',
-        body: JSON.stringify(params)
-      }).then(res => res.json());
+    async function firstAi() {
+      if (startSide === 2) {
+        const params = {
+          currentPlayer: 'p2',
+          hands: {
+            p1: player1,
+            p2: player2,
+          },
+          move: null,
+          board: serverBoard,
+        };
+        const game = await fetch('https://reactmarathon-api.herokuapp.com/api/pokemons/game', {
+          method: 'POST',
+          body: JSON.stringify(params)
+        }).then(res => res.json());
 
-      console.log('### p2', game);
 
-      if (game.move !== null) {
-        const idAi = game.move.poke.id;
 
-        setTimeout(() => {
-          setPlayer2(prevState => prevState.map(item => {
-            if (item.id === idAi) {
-              return item = {
-                ...item,
-                selected: true,
+        if (game.move !== null) {
+          const idAi = game.move.poke.id;
+
+          setTimeout(() => {
+            setPlayer2(prevState => prevState.map(item => {
+              if (item.id === idAi) {
+                return item = {
+                  ...item,
+                  selected: true,
+                }
               }
-            }
 
-            return item;
-          }));
-        }, 1000)
+              return item;
+            }));
+          }, 1000)
 
 
-        setTimeout(() => {
-          setPlayer2(() => game.hands.p2.pokes.map(item => item.poke));
-          setServerBoard(game.board);
-          setBoard(returnBoard(game.board));
+          setTimeout(() => {
+            setPlayer2(() => game.hands.p2.pokes.map(item => item.poke));
+            setServerBoard(game.board);
+            setBoard(returnBoard(game.board));
 
-          setSteps(prevState => {
-            const count = prevState + 1;
-            return count;
-          })
+            setSteps(prevState => {
+              const count = prevState + 1;
+              return count;
+            })
 
-        }, 2000)
+          }, 2000)
+        }
       }
     };
+    firstAi();
 
-  }, [])
+  }, [startSide])
 
   const handleClickBoardPlate = async (position) => {
 
@@ -181,10 +175,7 @@ const BoardPage = () => {
         return item;
       }));
 
-      const game = await fetch('https://reactmarathon-api.herokuapp.com/api/pokemons/game', {
-        method: 'POST',
-        body: JSON.stringify(params)
-      }).then(res => res.json());
+      const game = await request.game(params);
 
       setBoard(returnBoard(game.oldBoard));
 
@@ -220,7 +211,7 @@ const BoardPage = () => {
             return count;
           })
 
-        }, 2000)
+        }, 1500)
       }
     }
   }
