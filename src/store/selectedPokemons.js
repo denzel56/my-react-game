@@ -12,13 +12,17 @@ export const slice = createSlice({
       data: actions.payload,
     }),
 
+    delPoke: (state, actions) => {
+
+    },
+
     cleanPokemons: () => ({
       data: {}
     }),
   },
 });
 
-export const { addPokemon, delPokemon, cleanPokemons } = slice.actions;
+export const { addPokemon, cleanPokemons, delPoke } = slice.actions;
 
 export const selectedPokemonsData = state => state.selectedPokemons.data;
 

@@ -14,6 +14,7 @@ import request from '../../../../service/request';
 import returnBoard from './utils/returnBoard';
 
 import s from './style.module.css';
+import ArrowChoice from '../../../../components/ArrowChoice';
 
 const counterWin = (board, player1, player2) => {
   let player1Count = player1.length;
@@ -69,6 +70,7 @@ const BoardPage = () => {
 
       setTimeout(() => {
         setStartSide(Math.floor(Math.random() * 2) + 1);
+
       }, 1500)
 
       dispatch(fetchPokemonsResolvePlayer2(player2Request.data));
@@ -211,7 +213,7 @@ const BoardPage = () => {
             return count;
           })
 
-        }, 1500)
+        }, 1000)
       }
     }
   }
@@ -244,6 +246,14 @@ const BoardPage = () => {
             onClickCard={(card) => setChoiseCard(card)}
           />
 
+        }
+      </div>
+      <div>
+        {
+          <ArrowChoice
+            stop={true}
+            side={startSide}
+          />
         }
       </div>
       <div className={s.playerTwo} >
