@@ -8,13 +8,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectedPokemonsData } from '../../../../store/selectedPokemons';
 import { fetchPokemonsResolvePlayer2 } from '../../../../store/player2Pokemons';
 
-import { player1Win, player2Win, noWinner } from '../../../../store/gameResult';
+import { player1Win, player2Win, noWinner, resultData } from '../../../../store/gameResult';
 
 import request from '../../../../service/request';
 import returnBoard from './utils/returnBoard';
 
 import s from './style.module.css';
 import ArrowChoice from '../../../../components/ArrowChoice';
+import Result from '../../../../components/Result';
+// import Result from '../../../../components/Result';
 
 const counterWin = (board, player1, player2) => {
   let player1Count = player1.length;
@@ -36,6 +38,7 @@ const counterWin = (board, player1, player2) => {
 const BoardPage = () => {
 
   const selectedPokemonsRedux = useSelector(selectedPokemonsData);
+  const winner = useSelector(resultData);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -123,7 +126,7 @@ const BoardPage = () => {
 
               return item;
             }));
-          }, 1000)
+          }, 1500)
 
 
           setTimeout(() => {
@@ -200,7 +203,7 @@ const BoardPage = () => {
 
             return item;
           }));
-        }, 1000)
+        }, 2000)
 
 
         setTimeout(() => {
@@ -213,7 +216,7 @@ const BoardPage = () => {
             return count;
           })
 
-        }, 1000)
+        }, 2000)
       }
     }
   }
