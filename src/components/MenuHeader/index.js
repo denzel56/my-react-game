@@ -52,7 +52,6 @@ const MenuHeader = ({bgActive}) => {
     } else {
       if (props.type === 'signup') {
         const pokemonStart = await fetch(' https://reactmarathon-api.herokuapp.com/api/pokemons/starter').then(res => res.json());
-        console.log('### start', pokemonStart);
 
         for (const item of pokemonStart.data) {
           await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${response.localId}/pokemons.json?auth=${response.idToken}`, {

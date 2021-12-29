@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as LoginSVG } from '../../assets/login.svg';
 import { ReactComponent as UserSVG } from '../../assets/user.svg';
+import { ReactComponent as LogoSVG } from '../../assets/pokem.svg';
 import { selectorUserLoading, selectUserLocalId } from '../../store/user';
 import s from './style.module.css';
 
@@ -16,9 +17,9 @@ const Navbar = ({ isOpen, bgActive = false, onClickHamburger, onClickLogin }) =>
       [s.bgActive]: bgActive
     })}>
       <div className = {cn(s.navWrapper)}>
-        <p className = {cn(s.brand)}>
-          LOGO
-        </p>
+        <div className={cn(s.brand)}>
+          <LogoSVG />
+        </div>
         <div className={s.loginAndMenu}>
           {(!isLoadingUser && !userLocalId) && (
             <div

@@ -35,9 +35,10 @@ export const selectPokemonsData = state => state.pokemons.data;
 
 export const getPokemonsAsync = () => async (dispatch, getState) => {
   const localId = selectUserLocalId(getState());
+  const idToken = localStorage.getItem('idToken');
   dispatch(fetchPokemons());
 
-  const data = await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${localId}/pokemons.json`).then(res => res.json());
+  const data = await fetch(`https://pokemon-game-react-default-rtdb.europe-west1.firebasedatabase.app/${localId}/pokemons.json?auth=${idToken}`).then(res => res.json());
 
   dispatch(fetchPokemonsResolve(data));
 }

@@ -5,13 +5,14 @@ import PokemonCards from "../../../../components/PokemonCards"
 
 import { useDispatch, useSelector } from "react-redux";
 import { getPokemonsAsync, selectPokemonsData } from "../../../../store/pokemons";
-import { selectedPokemonsData, addPokemon, cleanPokemons } from "../../../../store/selectedPokemons";
+import { selectedPokemonsData, addPokemon, cleanPokemons, delPoke } from "../../../../store/selectedPokemons";
 
 import s from "./style.module.css";
 
 const StartPage = () => {
   const pokemonsRedux = useSelector(selectPokemonsData);
   const selectedPokemonsRedux = useSelector(selectedPokemonsData);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -36,8 +37,6 @@ const StartPage = () => {
       ...selectedPokemonsRedux,
       [key]: pokemon,
     }));
-
-
     setPokemons(prevState => ({
       ...prevState,
       [key]: {
@@ -45,9 +44,7 @@ const StartPage = () => {
         selected: !prevState[key].selected
       }
     }))
-
   }
-
   const handleStartGame = () => {
     history.push('/game/board');
   }
